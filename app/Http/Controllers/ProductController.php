@@ -14,6 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // return "OK";
         return view('backend.pages.products');
     }
 

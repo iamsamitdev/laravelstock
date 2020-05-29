@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class BackendController extends Controller
 {
+    public function index(){
+        return view('backend.pages.dashboard');
+    }
+
     public function blank(){
         return view('backend.pages.blank');
     }
