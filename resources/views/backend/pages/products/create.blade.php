@@ -49,7 +49,7 @@
                      <div class="col-md-10">
                         <div class="form-group">
                             <label for="product_name">ชื่อสินค้า</label>
-                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="ป้อนชื่อสินค้า" value="{{old('product_name')}}">
+                            <input type="text" class="form-control {{ $errors->has('product_name') ? 'is-invalid' :'' }}" id="product_name" name="product_name" placeholder="ป้อนชื่อสินค้า" value="{{old('product_name')}}">
                             <span class="help-block text-danger"><small>{{ $errors->first('product_name') }}</small></span>
                           </div>
         
@@ -60,25 +60,25 @@
         
                           <div class="form-group">
                             <label for="product_barcode">บาร์โค้ด</label>
-                            <input type="text" class="form-control" id="product_barcode" name="product_barcode" placeholder="ป้อนบาร์โค้ด" value="{{old('product_barcode')}}">
+                            <input type="text" class="form-control  {{ $errors->has('product_barcode') ? 'is-invalid' :'' }}" id="product_barcode" name="product_barcode" placeholder="ป้อนบาร์โค้ด" value="{{old('product_barcode')}}">
                             <span class="help-block text-danger"><small>{{ $errors->first('product_barcode') }}</small></span>
                           </div>
         
                           <div class="form-group">
                             <label for="product_qty">จำนวนชิ้น</label>
-                            <input type="text" class="form-control" id="product_qty" name="product_qty" placeholder="ป้อนจำนวนชิ้น" value="{{old('product_qty')}}">
+                            <input type="text" class="form-control {{ $errors->has('product_qty') ? 'is-invalid' :'' }}" id="product_qty" name="product_qty" placeholder="ป้อนจำนวนชิ้น" value="{{old('product_qty')}}">
                             <span class="help-block text-danger"><small>{{ $errors->first('product_qty') }}</small></span>
                           </div>
         
                           <div class="form-group">
                             <label for="product_price">ราคา</label>
-                            <input type="text" class="form-control" id="product_price" name="product_price" placeholder="ป้อนราคา" value="{{old('product_price')}}">
+                            <input type="text" class="form-control {{ $errors->has('product_price') ? 'is-invalid' :'' }}" id="product_price" name="product_price" placeholder="ป้อนราคา" value="{{old('product_price')}}">
                             <span class="help-block text-danger"><small>{{ $errors->first('product_price') }}</small></span>
                           </div>
         
                           <div class="form-group">
                             <label for="product_category">หมวดหมู่</label>
-                            <input type="text" class="form-control" id="product_category" name="product_category" placeholder="ป้อนหมวดหมู่" value="{{old('product_category')}}">
+                            <input type="text" class="form-control {{ $errors->has('product_category') ? 'is-invalid' :'' }}" id="product_category" name="product_category" placeholder="ป้อนหมวดหมู่" value="{{old('product_category')}}">
                             <span class="help-block text-danger"><small>{{ $errors->first('product_category') }}</small></span>
                           </div>
 

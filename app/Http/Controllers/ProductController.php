@@ -54,9 +54,9 @@ class ProductController extends Controller
         ];
 
         $messages = [
-            'required' => 'ฟิลด์นี้จำเป็น',
+            'required' => 'ฟิลด์ :attribute นี้จำเป็น',
             'integer' => 'ฟิลด์นี้ต้องเป็นตัวเลขเท่านั้น',
-            'digits' => 'ต้องเป็นตัวเลขความยาว :attrubute'
+            'digits' => 'ฟิลด์ :attribute ต้องเป็นตัวเลขความยาว :digits หลัก'
         ];
 
         $validator = Validator::make($request->all(), $rules,$messages);
