@@ -46,5 +46,4 @@ Route::group([
     // Routing Resource Product
     Route::resource('products', 'ProductController');
     
-
 });

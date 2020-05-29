@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Product;
+use App\Model\Product; // Load Model
 use Illuminate\Http\Request;
+use Validator; // Class ใช้ตรวจสอบข้อมูลในฟอร์ม
 
 class ProductController extends Controller
 {
@@ -14,7 +15,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.products.index');
+        // อ่านข้อมูล
+        $products = Product::latest()->paginate(2);
+        // print_r($products);
+        return view('backend.pages.products.index', compact('products'))->with('i', (request()->input('page', 1) -1 ) * 2);
     }
 
     /**
@@ -35,7 +39,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return "This is store";
+        // echo $request->input('product_name');
+        // echo $request->product_barcode;
+        echo "<pre>";
+        print_r($request->all());
+        echo "</pre>";
+
+        $rules = [
+            'product_name' => 'required',
+            'product_barcode' => 'required|integer|digits:13',
+            'product_qty' => 'required',
+            'product_price' => 'required',
+            'product_category' => 'required'
+        ];
+
+        $messages = [
+            'required' => 'ฟิลด์นี้จำเป็น',
+            'integer' => 'ฟิลด์นี้ต้องเป็นตัวเลขเท่านั้น',
+            'digits' => 'ต้องเป็นตัวเลขความยาว :attrubute'
+        ];
+
+        $validator = Validator::make($request->all(), $rules,$messages);
+
+        if($validator->fails()){ // ตรวจสอบไม่ผ่าน
+            return redirect()->back()->withErrors($validator)->withInput();
+        }else{
+            $status = Product::create($request->all());
+            // print_r($status);
+            return redirect()->route('products.create')->with('success','Add new product success');
+        }
+        
     }
 
     /**
@@ -57,7 +90,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return "This is edit";
+        return view('backend.pages.products.edit', compact('product'));
     }
 
     /**
@@ -69,7 +102,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        return "This is update";
+        $product->update($request->all());
+        return redirect()->route('products.index')->with('update_success','Update product success');
     }
 
     /**
@@ -80,6 +114,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        return "This is destroy";
+        $product->delete();
+        return redirect()->route('products.index')->with('success','Delete product success');
     }
 }

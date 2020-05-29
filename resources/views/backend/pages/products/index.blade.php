@@ -21,6 +21,18 @@
   <!-- Main content -->
   <section class="content">
 
+        @if($message = Session::get('success'))
+        <div class="alert alert-success text-center">
+        {{ $message }}
+        </div>
+        @endif
+
+        @if($message = Session::get('update_success'))
+        <div class="alert alert-success text-center">
+        {{ $message }}
+        </div>
+        @endif
+
         <!-- Default box -->
         <div class="card">
         <div class="card-header">
@@ -66,52 +78,60 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php for($i=1;$i<=10;$i++){?>
+                    @foreach($products as $product)
                     <tr>
                         <td>
-                            #
+                            {{ ++$i }}
                         </td>
                         <td>
                             <a>
-                                Lenovo Laptop Y30
+                               {{  $product->product_name  }}
                             </a>
                             <br/>
                             <small>
-                                Created 01.01.2019
+                                Created {{  $product->created_at  }}
                             </small>
                         </td>
                         <td>
-                            99565656565656
+                            {{  $product->product_barcode  }}
                         </td>
                         <td>
-                           20
+                            {{  $product->product_qty  }}
                         </td>
                         <td >
-                            24,500.00
+                            {{  $product->product_price  }}
                         </td>
-                        <td>Electronic</td>
-                        <td><span class="badge badge-success">Success</span></td>
+                        <td> {{  $product->product_category  }}</td>
+                        <td><span class="badge badge-success">{{  $product->product_status  }}</span></td>
                         <td class="project-actions text-right">
-                            <a class="btn btn-primary btn-sm" href="#">
-                                <i class="fas fa-folder">
-                                </i>
-                                View
-                            </a>
-                            <a class="btn btn-info btn-sm" href="#">
-                                <i class="fas fa-pencil-alt">
-                                </i>
-                                Edit
-                            </a>
-                            <a class="btn btn-danger btn-sm" href="#">
-                                <i class="fas fa-trash">
-                                </i>
-                                Delete
-                            </a>
+
+                            <form action="{{route('products.destroy', $product->id) }}" method="POST">
+                                @csrf
+                                <a class="btn btn-primary btn-sm" href="{{route('products.show', $product->id)}}">
+                                    <i class="fas fa-folder">
+                                    </i>
+                                    View
+                                </a>
+                                <a class="btn btn-info btn-sm" href="{{route('products.edit', $product->id)}}">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    Edit
+                                </a>
+
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('ต้องการลบรายการนี้หรือไม่')">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                    Delete
+                                </button>
+                            </form>
+
                         </td>
                     </tr>
-                <?php } ?>
+                @endforeach
                 </tbody>
             </table>
+            {{ $products->links() }}
         </div>
         <!-- /.card-body -->
         </div>
