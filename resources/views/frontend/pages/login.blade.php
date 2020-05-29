@@ -1,4 +1,4 @@
-@extends('backend.layouts.auth_layout')
+@extends('frontend.layouts.auth_layout')
 @section('title') Login @parent @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
       <div class="card-body login-card-body">
         <p class="login-box-msg">Sign in to start your session</p>
   
-        <form action="{{url('/')}}" method="get">
+        <form action="{{url('backend/dashboard')}}" method="get">
           <div class="input-group mb-3">
             <input type="email" class="form-control" placeholder="Email">
             <div class="input-group-append">

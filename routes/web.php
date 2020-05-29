@@ -13,10 +13,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'BackendController@blank');
-Route::get('login', 'BackendController@login');
-Route::get('register', 'BackendController@register');
-Route::get('forgotpass', 'BackendController@forgotpass');
+/*
+|--------------------------------------------------------------------------
+| Frontend
+|--------------------------------------------------------------------------
+|
+*/
+Route::get('/', 'FrontendController@index');
+Route::get('login', 'FrontendController@login');
+Route::get('register', 'FrontendController@register');
+Route::get('forgotpass', 'FrontendController@forgotpass');
 
-// Routing Resource
-Route::resource('products', 'ProductController');
+/*
+|--------------------------------------------------------------------------
+| Backend
+|--------------------------------------------------------------------------
+|
+*/
+// *** USER ****/
+Route::group([
+    'prefix' => 'backend'
+], function(){
+
+    // Dashboard
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('dashboard', 'BackendController@dashboard');
+    Route::get('logout', 'BackendController@logout');
+
+    // Blank page
+    Route::get('blank', 'BackendController@blank');
+
+    // Routing Resource Product
+    Route::resource('products', 'ProductController');
+    
+
+});

@@ -14,7 +14,7 @@
   @include('backend.includes.sidebar')
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="margin-top: 60px">
     <!-- Content Header (Page header) -->
     @yield('content')
     <!-- /.content -->

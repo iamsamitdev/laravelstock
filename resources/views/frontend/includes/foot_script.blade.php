@@ -8,14 +8,5 @@
 <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('assets/dist/js/demo.js')}}"></script>
-
-<!-- CKEditor -->
-<script src="https://cdn.ckeditor.com/ckeditor5/19.0.0/classic/ckeditor.js"></script>
-
-<!-- OPTIONAL SCRIPTS -->
-<script src="{{asset('assets/plugins/chart.js/Chart.min.js')}}"></script>
-<script src="{{asset('assets/dist/js/demo.js')}}"></script>
-<script src="{{asset('assets/dist/js/pages/dashboard3.js')}}"></script>
-
 <!-- Custom JS -->
 <script src="{{asset('assets/js/custom.js')}}"></script>

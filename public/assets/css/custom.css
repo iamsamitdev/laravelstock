@@ -1,0 +1,25 @@
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
+  .btn-file input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0 auto;
+    width: 100% !important;
+  }
+  
+  .label-uppic{
+    margin-top: 10px;
+    text-align: center;
+  }

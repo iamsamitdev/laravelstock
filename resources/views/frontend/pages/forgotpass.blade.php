@@ -1,4 +1,4 @@
-@extends('backend.layouts.auth_layout')
+@extends('frontend.layouts.auth_layout')
 @section('title') Forgot Password @parent @endsection
 
 @section('content')

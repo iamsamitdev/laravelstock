@@ -35,6 +35,7 @@
       </div>
       <div class="card-body">
         Start creating your amazing application!
+        <a class="btn btn-info" href="{{ route('products.show', 1) }}">Show</a>
       </div>
       <!-- /.card-body -->
       <div class="card-footer">
