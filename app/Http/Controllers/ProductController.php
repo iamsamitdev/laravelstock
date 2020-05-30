@@ -128,7 +128,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return "This is show";
+        return view('backend.pages.products.show', compact('product'));
     }
 
     /**

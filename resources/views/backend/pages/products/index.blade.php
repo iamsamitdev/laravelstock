@@ -48,6 +48,7 @@
                         <th style="width: 1%">
                             #
                         </th>
+                        <th>Image</th>
                         <th style="width: 30%">
                             Name
                         </th>
@@ -76,6 +77,13 @@
                     <tr>
                         <td>
                             {{ ++$i }}
+                        </td>
+                        <td>
+                            @if(empty($product->product_image))
+                                <img src="{{asset('assets/images/noImg.jpg')}}" class="rounded" width="50">
+                            @else
+                                <img src="{{asset('assets/images/products')}}/{{$product->product_image}}" class="rounded" width="50">
+                            @endif
                         </td>
                         <td>
                             <a>
