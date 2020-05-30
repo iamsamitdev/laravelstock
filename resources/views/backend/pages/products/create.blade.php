@@ -7,7 +7,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Add new product</h1>
+          <h1>เพิ่มรายการใหม่</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -20,6 +20,8 @@
   </section>
 
   <section class="content">
+    
+    {!! Session::get('status') !!}
 
     <!-- Default box -->
     @if($message = Session::get('success'))
@@ -39,7 +41,7 @@
         </div>
 
         <div class="card-body p-0">
-        <form role="form" method="post" action="{{ route('products.store') }}">
+        <form role="form" method="post" action="{{ route('products.store') }}" enctype="multipart/form-data">
 
                 @csrf
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Product; // Load Model
 use Illuminate\Http\Request;
 use Validator; // Class ใช้ตรวจสอบข้อมูลในฟอร์ม
+use Image; // อัพโหลดไฟล์
 
 class ProductController extends Controller
 {
@@ -64,9 +65,59 @@ class ProductController extends Controller
         if($validator->fails()){ // ตรวจสอบไม่ผ่าน
             return redirect()->back()->withErrors($validator)->withInput();
         }else{
-            $status = Product::create($request->all());
+            
+            // $status = Product::create($request->all());  // Add All
             // print_r($status);
+
+            $data_product = array(
+                'product_name' => $request->product_name,
+                'product_detail' => $request->product_detail,
+                'product_barcode' => $request->product_barcode,
+                'product_qty' => $request->product_qty,
+                'product_price' => $request->product_price,
+                'product_category' => $request->product_category,
+                'product_status' => $request->product_status,
+                'updated_at' => NOW(),
+                'created_at' => NOW(),
+            );
+
+            // Upload image
+            try {
+
+                $image = $request->file('product_image');
+
+                if (!empty($image)) {
+                    $file_name = "product_" . time() . "." . $image->getClientOriginalExtension();
+                    if ($image->getClientOriginalExtension() == "jpg" or $image->getClientOriginalExtension() == "png") {
+
+                        $imgwidth = 300;
+                        $folderupload = 'assets/images/products';
+                        $path = $folderupload . '/' . $file_name;
+
+                        // uploade to folder users
+                        $img = Image::make($image->getRealPath());
+                        if ($img->width() > $imgwidth) {
+                            $img->resize($imgwidth, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                        }
+                        $img->save($path);
+
+                        $data_product['product_image'] = $file_name;
+                    } else {
+                        return redirect()->back()->withErrors($validator)->withInput()->with('status', '<div class="alert alert-danger">ไฟล์ภาพไม่รองรับ อนุญาติเฉพาะ .jpg และ .png</div>');
+                        // return redirect()->route('products.create')->with('status', '<div class="alert alert-danger">ไฟล์ภาพไม่รองรับ อนุญาติเฉพาะ .jpg และ .png</div>');
+                    }
+                }
+
+            } catch (Exception $e) {
+                report($e);
+                return false;
+            }
+
+            $status = Product::create($data_product);
             return redirect()->route('products.create')->with('success','บันทึกรายการสินค้าใหม่เรียบร้อย');
+
         }
         
     }
@@ -79,7 +130,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return "This is show";
+        return view('backend.pages.products.show', compact('product'));
     }
 
     /**
