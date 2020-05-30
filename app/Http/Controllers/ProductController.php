@@ -6,6 +6,9 @@ use App\Model\Product; // Load Model
 use Illuminate\Http\Request;
 use Validator; // Class ใช้ตรวจสอบข้อมูลในฟอร์ม
 
+// โหลด library จัดการรูป
+use Image;
+
 class ProductController extends Controller
 {
     /**
@@ -47,7 +50,7 @@ class ProductController extends Controller
 
         $rules = [
             'product_name' => 'required',
-            'product_barcode' => 'required|integer|digits:13',
+            'product_barcode' => 'required|integer|digits:13|unique:products',
             'product_qty' => 'required',
             'product_price' => 'required',
             'product_category' => 'required'
@@ -56,7 +59,8 @@ class ProductController extends Controller
         $messages = [
             'required' => 'ฟิลด์ :attribute นี้จำเป็น',
             'integer' => 'ฟิลด์นี้ต้องเป็นตัวเลขเท่านั้น',
-            'digits' => 'ฟิลด์ :attribute ต้องเป็นตัวเลขความยาว :digits หลัก'
+            'digits' => 'ฟิลด์ :attribute ต้องเป็นตัวเลขความยาว :digits หลัก',
+            'unique' => 'รายการนี้มีอยู่แล้วในตาราง (ห้ามซ้ำ)'
         ];
 
         $validator = Validator::make($request->all(), $rules,$messages);
@@ -64,7 +68,52 @@ class ProductController extends Controller
         if($validator->fails()){ // ตรวจสอบไม่ผ่าน
             return redirect()->back()->withErrors($validator)->withInput();
         }else{
-            $status = Product::create($request->all());
+
+            $product_data = array(
+                'product_name' => $request->product_name,
+                'product_detail' => $request->product_detail,
+                'product_barcode' => $request->product_barcode,
+                'product_qty' => $request->product_qty,
+                'product_price' => $request->product_price,
+                'product_category' => $request->product_category,
+                'product_status' => $request->product_status,
+                'created_at' => NOW(),
+                'updated_at' => NOW()
+            );
+
+            // Upload Product Image
+            try{
+                $image = $request->file('product_image');
+                // เช็คว่ามีการเลือกไฟล์ภาพเข้ามาหรือไม่
+                if(!empty($image)){
+                    $file_name = "product_".time().".".$image->getClientOriginalExtension();
+                    if($image->getClientOriginalExtension() == "jpg" or $image->getClientOriginalExtension() == "png"){
+                       
+                        $imgWidth = 300;
+                        $folderupload = "assets/images/products";
+                        $path = $folderupload."/".$file_name;
+
+                        // upload to folder products
+                        $img = Image::make($image->getRealPath());
+
+                        if($img->width() > $imgWidth){
+                            $img->resize($imgWidth, null, function($constraint){
+                                $constraint->aspectRatio();
+                            });
+                        }
+
+                        $img->save($path);
+                        $product_data['product_image'] = $file_name;
+                    }else{
+                        return redirect()->route('products.create')->withErrors($validator)->withInput()->with('status','<div class="alert alert-danger">ไฟล์ภาพไม่รองรับ อนุญาติเฉพาะ .jpg และ .png</div>');
+                    }
+                }
+            }catch(Exception $e){
+                print_r($e);
+                return false;
+            }
+
+            $status = Product::create($product_data);
             // print_r($status);
             return redirect()->route('products.create')->with('success','บันทึกรายการสินค้าใหม่เรียบร้อย');
         }

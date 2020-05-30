@@ -21,6 +21,8 @@
 
   <section class="content">
 
+    {!! Session::get('status') !!}
+
     <!-- Default box -->
     @if($message = Session::get('success'))
     <div class="alert alert-success text-center">
@@ -39,7 +41,7 @@
         </div>
 
         <div class="card-body p-0">
-        <form role="form" method="post" action="{{ route('products.store') }}">
+        <form role="form" method="post" action="{{ route('products.store') }}" enctype="multipart/form-data">
 
                 @csrf
 
