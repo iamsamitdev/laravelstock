@@ -53,7 +53,7 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-6"><b>สถานะ</b></div>
-                        <div class="col-md-6">{!! config('global.pro_status')[ $product->product_status] !!}</div>
+                        <div class="col-md-6">{!! config('global.pro_status')[$product->product_status]  !!}</div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-6"><b>เพิ่มข้อมูลเมื่อ</b></div>

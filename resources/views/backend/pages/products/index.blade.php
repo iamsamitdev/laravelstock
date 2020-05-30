@@ -6,7 +6,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Products List</h1>
+          <h1>รายการสินค้า</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -32,7 +32,7 @@
         <div class="card-header">
             <h3 class="card-title">
                 <a name="" id="" class="btn btn-success" href="{{ route('products.create') }}" role="button">
-                    <i class="fas fa-plus"></i> &nbsp;Add new product
+                    <i class="fas fa-plus"></i> &nbsp;เพิ่มสินค้าใหม่
                 </a>
             </h3>
 
@@ -45,11 +45,11 @@
             <table class="table table-striped projects">
                 <thead>
                     <tr>
-                        <th style="width: 1%">
-                            #
+                        <th style="width: 1%">#</th>
+                        <th>
+                            Images
                         </th>
-                        <th>Image</th>
-                        <th style="width: 30%">
+                        <th style="width: 20%">
                             Name
                         </th>
                         <th  style="width: 10%">
@@ -79,11 +79,7 @@
                             {{ ++$i }}
                         </td>
                         <td>
-                            @if(empty($product->product_image))
-                                <img src="{{asset('assets/images/noImg.jpg')}}" class="rounded" width="50">
-                            @else
-                                <img src="{{asset('assets/images/products')}}/{{$product->product_image}}" class="rounded" width="50">
-                            @endif
+                            <img src="{{asset('assets/images/products')}}/{{$product->product_image}}" class="rounded" width="50">
                         </td>
                         <td>
                             <a>
@@ -104,7 +100,7 @@
                             {{  $product->product_price  }}
                         </td>
                         <td> {{  $product->product_category  }}</td>
-                        <td><span class="badge badge-success">{{  $product->product_status  }}</span></td>
+                        <td>{!! config('global.pro_status')[ $product->product_status] !!}</span></td>
                         <td class="project-actions text-right">
 
                             <form action="{{route('products.destroy', $product->id) }}" method="POST">

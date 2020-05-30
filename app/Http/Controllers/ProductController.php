@@ -18,8 +18,9 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // print_r(config('global.pro_status')[1]);
         // อ่านข้อมูล
-        $products = Product::latest()->paginate(5);
+       $products = Product::latest()->paginate(5);
         // print_r($products);
         return view('backend.pages.products.index', compact('products'))->with('i', (request()->input('page', 1) -1 ) * 5);
     }
