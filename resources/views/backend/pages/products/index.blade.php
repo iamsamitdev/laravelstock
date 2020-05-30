@@ -22,16 +22,10 @@
   <section class="content">
 
         @if($message = Session::get('success'))
-        <div class="alert alert-success text-center">
-        {{ $message }}
-        </div>
-        @endif
-
-        @if($message = Session::get('update_success'))
-        <div class="alert alert-success text-center">
-        {{ $message }}
-        </div>
-        @endif
+        <div class="alert alert-success text-center" role="alert">
+             {{ $message }}
+          </div>
+         @endif
 
         <!-- Default box -->
         <div class="card">
@@ -131,7 +125,7 @@
                 @endforeach
                 </tbody>
             </table>
-            {{ $products->links() }}
+            <div class="mt-3" style="padding-left: 40%;">{{ $products->links() }}</div>
         </div>
         <!-- /.card-body -->
         </div>

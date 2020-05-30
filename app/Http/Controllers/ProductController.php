@@ -16,9 +16,9 @@ class ProductController extends Controller
     public function index()
     {
         // อ่านข้อมูล
-        $products = Product::latest()->paginate(2);
+        $products = Product::latest()->paginate(5);
         // print_r($products);
-        return view('backend.pages.products.index', compact('products'))->with('i', (request()->input('page', 1) -1 ) * 2);
+        return view('backend.pages.products.index', compact('products'))->with('i', (request()->input('page', 1) -1 ) * 5);
     }
 
     /**
@@ -66,7 +66,7 @@ class ProductController extends Controller
         }else{
             $status = Product::create($request->all());
             // print_r($status);
-            return redirect()->route('products.create')->with('success','Add new product success');
+            return redirect()->route('products.create')->with('success','บันทึกรายการสินค้าใหม่เรียบร้อย');
         }
         
     }
@@ -103,7 +103,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $product->update($request->all());
-        return redirect()->route('products.index')->with('update_success','Update product success');
+        return redirect()->route('products.index')->with('success','รายการสินค้าถูกแก้ไขแล้ว');
     }
 
     /**
@@ -115,6 +115,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('success','Delete product success');
+        return redirect()->route('products.index')->with('success','ลบรายการนี้แล้ว');
     }
 }
