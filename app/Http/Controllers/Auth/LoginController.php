@@ -26,7 +26,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = 'backend/dashboard';
 
     /**
      * Create a new controller instance.
@@ -37,4 +38,12 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // สร้างฟังก์ชัน Logout
+    public function logout(){
+        Auth()->logout();
+        // ส่งไปหน้า login
+        return redirect('login');
+    }
+    
 }

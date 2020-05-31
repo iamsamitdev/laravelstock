@@ -135,7 +135,10 @@
                 <a href="#" class="btn btn-block btn-default btn-flat">Profile</a>
               </div>
               <div class="col-md-6 text-right">
-                <a href="{{url('backend/logout')}}" class="btn btn-block btn-default btn-flat">Sign out</a>
+                <form action="{{route('logout')}}" method="post">
+                  @csrf
+                  <button type="submit" class="btn btn-block btn-default btn-flat">Sign out</button>
+                </form>
               </div>
             </div>
           </li>

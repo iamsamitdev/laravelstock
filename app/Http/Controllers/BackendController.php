@@ -18,4 +18,20 @@ class BackendController extends Controller
         return redirect('login');
     }
 
+    public function reports(){
+        return "Reports";
+    }
+
+    public function users(){
+        return "Users";
+    }
+
+    public function settings(){
+        return "Settings";
+    }
+
+    public function nopermission(){
+        return view('backend.pages.nopermission');
+    }
+
 }

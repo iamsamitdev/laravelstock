@@ -35,7 +35,7 @@
           </li>
 
           <li class="nav-header">USERS MANAGE</li>
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview {{ (request()->segment(2) == 'products') ? 'menu-open' : ' ' }} {{ (request()->segment(2) == 'categorys') ? 'menu-open' : ' ' }}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cubes"></i>
               <p>
@@ -45,19 +45,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{url('backend/products')}}" class="nav-link">
+                <a href="{{url('backend/products')}}" class="nav-link {{ (request()->segment(2) == 'products') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('backend/categories')}}" class="nav-link">
+                <a href="{{url('backend/categorys')}}" class="nav-link {{ (request()->segment(2) == 'categorys') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Category</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{url('backend/orders')}}" class="nav-link">
+                <a href="{{url('backend/orders')}}" class="nav-link {{ (request()->segment(2) == 'orders') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Orders</p>
                 </a>
@@ -74,10 +74,11 @@
             </a>
           </li>
 
+         @if(Auth::user()->isAdmin == 1)
           <li class="nav-header">ADMIN MANAGE</li>
 
           <li class="nav-item">
-            <a href="{{url('backend/reporst')}}" class="nav-link">
+            <a href="{{url('backend/reports')}}" class="nav-link">
               <i class="nav-icon fas fa-chart-area"></i>
               <p>
                 Reports
@@ -102,6 +103,8 @@
               </p>
             </a>
           </li>
+
+        @endif
 
           <li class="nav-header"><hr></li>
           <li class="nav-item">

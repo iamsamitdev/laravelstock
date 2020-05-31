@@ -152,8 +152,52 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $product->update($request->all());
-        return redirect()->route('products.index')->with('success','รายการสินค้าถูกแก้ไขแล้ว');
+
+        $product_data = array(
+            'product_name' => $request->product_name,
+            'product_detail' => $request->product_detail,
+            'product_barcode' => $request->product_barcode,
+            'product_qty' => $request->product_qty,
+            'product_price' => $request->product_price,
+            'product_category' => $request->product_category,
+            'product_status' => $request->product_status,
+            'updated_at' => NOW()
+        );
+
+         // Upload Product Image
+         try{
+            $image = $request->file('product_image');
+            // เช็คว่ามีการเลือกไฟล์ภาพเข้ามาหรือไม่
+            if(!empty($image)){
+                $file_name = "product_".time().".".$image->getClientOriginalExtension();
+                if($image->getClientOriginalExtension() == "jpg" or $image->getClientOriginalExtension() == "png"){
+                   
+                    $imgWidth = 300;
+                    $folderupload = "assets/images/products";
+                    $path = $folderupload."/".$file_name;
+
+                    // upload to folder products
+                    $img = Image::make($image->getRealPath());
+
+                    if($img->width() > $imgWidth){
+                        $img->resize($imgWidth, null, function($constraint){
+                            $constraint->aspectRatio();
+                        });
+                    }
+
+                    $img->save($path);
+                    $product_data['product_image'] = $file_name;
+                }else{
+                    return redirect()->route('products.create')->withErrors($validator)->withInput()->with('status','<div class="alert alert-danger">ไฟล์ภาพไม่รองรับ อนุญาติเฉพาะ .jpg และ .png</div>');
+                }
+            }
+        }catch(Exception $e){
+            print_r($e);
+            return false;
+        }
+
+        $product->update($product_data);
+        return redirect()->route('products.index')->with('success','<div class="alert alert-warning text-center" role="alert">รายการสินค้าถูกแก้ไขแล้ว</div>');
     }
 
     /**
@@ -165,6 +209,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('success','ลบรายการนี้แล้ว');
+        return redirect()->route('products.index')->with('success','<div class="alert alert-danger text-center" role="alert">ลบรายการนี้แล้ว</div>');
     }
 }
